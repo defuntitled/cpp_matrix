@@ -282,3 +282,4 @@ Matrix<T> Matrix<T>::transpose() {
 
 template<typename T>
 Matrix<T>::~Matrix() = default;
+
