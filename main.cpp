@@ -28,6 +28,10 @@ void checkReverse(){
         std::cout<<matrix*matrix.reverseMatrix();}
     catch(std::runtime_error&e){
         std::cout<<e.what();
+        std::cout.flush();
+        matrix = {};
+        std::cout<<"Enter deminition and matrix\n";
+        std::cin>>matrix;
         checkReverse();
     }
 }
