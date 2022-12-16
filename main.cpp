@@ -12,10 +12,10 @@ void slauTest(){
     }try {
         Matrix<double> gauss_res = matrix.gauss(b);
         Matrix<double> cramer_res = matrix.crammer(b);
-        std::cout<<gauss_res<<'\n';
-        std::cout << matrix * gauss_res.transpose()<<'\n';
-        std::cout<<cramer_res<<'\n';
-        std::cout << matrix * cramer_res.transpose()<<'\n';
+        std::cout<<"gaussian solve\n"<<gauss_res<<'\n';
+        std::cout<<"gaussian check\n" << matrix * gauss_res.transpose()<<'\n';
+        std::cout<<"crammer solve\n"<<cramer_res<<'\n';
+        std::cout <<"crammer check\n"<< matrix * cramer_res.transpose()<<'\n';
     }
     catch (std::runtime_error &e){
         std::cout<<e.what()<<'\n';
