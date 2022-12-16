@@ -58,7 +58,7 @@ public:
 private:
     void mkVector(int n, int m);
     void triangulateMatrix();
-
+    T cof;
     std::vector<std::vector<T>> data;
     std::vector<std::vector<T>> triangulated_data;
     std::vector<int> where;
@@ -104,7 +104,7 @@ template<typename T> T Matrix<T>::det() {
         for (int i = 0; i < data.size(); ++i) {
             ans*=triangulated_data[i][i];
         }
-        return ans;
+        return ans*(cof/abs(cof));
     }
 }
 
@@ -114,6 +114,7 @@ template<typename T> void Matrix<T>::triangulateMatrix() {
     int m = (int) data[0].size();
     triangulated_data.assign(data.begin(),data.end());
     where.assign(m, -1);
+    cof = 1;
     for (int col = 0, row = 0; col < m && row < n; ++col) {
         int sel = row;
         for (int i = row; i < n; ++i)
@@ -121,21 +122,25 @@ template<typename T> void Matrix<T>::triangulateMatrix() {
                 sel = i;
         if (abs(triangulated_data[sel][col]) < EPS)
             continue;
-        for (int i = col; i <= m; ++i) {
+        if(sel!=row)cof*=-1;
+        for (int i = col; i < m; ++i) {
             T t = triangulated_data[sel][i];
             triangulated_data[sel][i] = triangulated_data[row][i];
             triangulated_data[row][i] = t;
         }
+
         where[col] = row;
 
         for (int i = 0; i < n; ++i)
             if (i != row) {
                 T c = triangulated_data[i][col] / triangulated_data[row][col];
-                for (int j = col; j <= m; ++j)
+                //cof*=c;
+                for (int j = col; j < m; ++j)
                     triangulated_data[i][j] -= triangulated_data[row][j] * c;
             }
         ++row;
     }
+
 }
 
 template<typename T> Matrix<T> Matrix<T>::gauss(const std::vector<T> &b) {
